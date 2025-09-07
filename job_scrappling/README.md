@@ -1,93 +1,117 @@
-# Job Postings Web Scraper
+Job Postings Web Scraper
 
-Job Postings Web Scraper is a Python-based tool designed to scrape job listings from Lever and Greenhouse job boards. It retrieves job titles, company names, locations, and job descriptions based on user-defined criteria and saves the results into an Excel file with separate sheets for relevant and potentially relevant job postings.
+A Python-based tool I built to help me automate the search for tech jobs across Lever and Greenhouse job boards. The scraper fetches job postings using Google Search, filters them by role and time period, and exports them into a timestamped Excel file for easy tracking.
 
-## Features
+✨ Features
 
-- Perform Google searches to find job postings on Lever and Greenhouse job boards.
-- Filter jobs based on user-specified roles and time periods.
-- Retrieve detailed job information including company name, job title, location, and job description.
-- Save job listings to an Excel file with timestamps for easy tracking and review.
-- Remove duplicate job listings and sort results alphabetically by company name.
+🔍 Search Lever and Greenhouse job boards via Google queries.
 
-## Prerequisites
+🎯 Filter jobs by role (sde, aiml, cv, nlp, robo, or all) and by recency (hour, day, week, month, year).
 
-- Python 3.6 or higher
-- Required Python libraries (listed in `requirements.txt`) OR Docker
+📝 Retrieve detailed info: company name, job title, location, and job description.
 
-## How to run
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/ghiarishi/job-scraper.git
-   cd "enter_path_here\job-scraper"
-   ```
+📊 Export results into Excel with separate sheets:
 
-2. Navigate to the repiository: 
-   ```sh
-   cd "enter_path_here\job-scraper"
-   ```
+Relevant jobs
 
-### Approach 1
+Potentially relevant jobs
 
-1. Install the required packages:
-   ```sh
-   pip install -r requirements.txt
-   ```
+Rejected jobs
 
-2. Run the script:
-   ```sh
-   python jobScraper.py
-   ```
+🗂️ Automatically remove duplicates and sort alphabetically by company.
 
-### Approach 2
-1. Ensure that you have Docker installed on your machine
+⏱️ Timestamped Excel filenames for tracking search history.
 
-2. Build the Docker Image: 
-   ```sh
-   docker build -t job-scraper-container .
-   ```
+⚙️ Prerequisites
 
-3. Run the Docker Image: 
-   ```sh
-   docker run -it -v "C:/Users/ghiar/Rishi Ghia/Personal Projects/job-scraper/data:/data" job-scraper-container
-   ```
+Python 3.8+
 
-## Usage: 
-1. Input the required information:
-   - Number of results to fetch: Enter 'max' to fetch as many results as possible or an integer to specify the exact number.
-   - Time period for the results: Specify 'h' for hour, 'd' for day, 'w' for week, 'm' for month, or 'y' for year.
-   - Roles of interest: Specify roles like 'sde' (Software Development Engineer), 'aiml' (AI/ML), 'cv' (Computer Vision), 'nlp' (Natural Language Processing), 'robo' (Robotics), or 'all' for all roles.
+Dependencies listed in requirements.txt
 
-2. Review the results:
-   - The script will fetch and display the number of job listings retrieved, remove duplicates, and show the number of relevant and potentially relevant job postings.
+OR Docker (optional)
 
-4. Output:
-   - The job listings will be saved to an Excel file named in the format `jobListings-<timePeriod>-<HH-MM, DD-MM-YYYY>.xlsx` with two sheets: 'Relevant Jobs' and 'Relevant (Maybe) Jobs', stored in the 'data' directory.
+🚀 How to Run
 
-## Code Overview
+Clone the repo:
 
-### Main Components
+git clone https://github.com/jeaneude/job-scraper.git
+cd job-scraper
 
-- `keywordsDict`: Dictionary mapping role abbreviations to relevant keywords.
-- `selectRoles(whichRoles)`: Function to select and return keywords based on user input roles.
-- `doGoogleSearch(query, numResults, timePeriod, start)`: Function to perform Google search and return job URLs.
-- `cleanURL(job_url)`: Function to clean and standardize job URLs.
-- `getJobInfo(url)`: Function to retrieve job details from a given URL.
-- `inUSA(location)`: Function to check if the job location is in the USA.
-- `isRelevantRole(jobTitle, keywords)`: Function to check if the job title matches relevant keywords.
-- `saveToExcel(jobList, jobListNoDetails, timePeriod)`: Function to save job listings to an Excel file.
+Approach 1: Run Locally
 
-### Example Workflow
+Install dependencies:
 
-## Authors
+pip install -r requirements.txt
 
-- Rishi Ghia - [ghiarishi](https://github.com/ghiarishi)
 
-## License
+Run the script:
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+python jobScraper.py
 
-## Acknowledgments
+Approach 2: Run with Docker
 
-- Inspiration and initial concept by Rishi Ghia.
-- Special thanks to the open-source community for the libraries used in this project.
+Make sure Docker is installed.
+
+Build the image:
+
+docker build -t job-scraper-container .
+
+
+Run the container (mounting a local data folder to save results):
+
+docker run -it -v "C:/Users/jeane/Documents/scrappling/job-scraper/data:/data" job-scraper-container
+
+🖥️ Usage
+
+When running python jobScraper.py, the script will ask you for:
+
+Number of results → max (all results) or an integer.
+
+Time period → h (hour), d (day), w (week), m (month), or y (year).
+
+Roles → sde, aiml, cv, nlp, robo, or all.
+
+The script will then:
+
+Fetch and display the number of results.
+
+Remove duplicates.
+
+Categorize jobs into Relevant, Maybe Relevant, and Rejected.
+
+Save everything to an Excel file in:
+
+data/jobListings-<timePeriod>-<HH-MM, DD-MM-YYYY>.xlsx
+
+📂 Code Overview
+
+keywordsDict → maps role abbreviations to keyword lists.
+
+selectRoles() → picks the right keywords for your chosen roles.
+
+doGoogleSearch() → performs Google queries and returns job links.
+
+cleanURL() → standardizes job URLs.
+
+getJobInfo() → scrapes job details.
+
+inUSA() → filters jobs by U.S. location.
+
+isRelevantRole() → checks job title relevance.
+
+saveToExcel() → writes results into Excel with multiple sheets.
+
+👤 Author
+
+Jean_eude Gbada
+
+📜 License
+
+This project is licensed under the MIT License – see the LICENSE.md
+ file for details.
+
+🙌 Acknowledgments
+
+Inspiration from open-source job scrapers.
+
+Thanks to Lever and Greenhouse for consistent job posting structures.
